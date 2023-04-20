@@ -8,7 +8,7 @@
 import Foundation
 
 struct ColorInfo: Identifiable, Hashable {
-    let title: String
+    var title: String
     
     let id: UUID
     

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ColorInfoView: View {
-    let info: ColorInfo
+    @State private(set) var info: ColorInfo
     let closeColors: [ColorInfo]
     
     init(_ info: ColorInfo, closeColors: [ColorInfo] = []) {
-        self.info = info
+        self._info = State(initialValue: info)
         self.closeColors = closeColors
     }
     
@@ -24,7 +24,9 @@ struct ColorInfoView: View {
             VStack(spacing: 16) {
                 ColorCircle(info, scale: 3)
                 
-                Text(info.title)
+                TextField("Title", text: $info.title)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: 200)
             }
             
             Spacer()
