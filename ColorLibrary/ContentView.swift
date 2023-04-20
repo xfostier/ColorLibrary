@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    let colors: [ColorInfo] = [.blue, .cantaloupe, .carnation, .eggPlant, .green, .lemon, .orchid, .red, .salmon, .seaFoam]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        List {
+            ForEach(colors, id: \.title) { color in
+                ColorInfoRow(color)
+            }
         }
-        .padding()
     }
 }
 
