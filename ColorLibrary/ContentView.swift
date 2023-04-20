@@ -15,7 +15,7 @@ struct ContentView: View {
             List {
                 ForEach(colors) { color in
                     NavigationLink {
-                        ColorInfoView(color)
+                        ColorInfoView(color, closeColors: [.eggPlant, .orchid])
                     } label: {
                         ColorInfoRow(color)
                     }
