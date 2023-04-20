@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private(set) var colorDataBase = ColorDataBase.demo
+    @State private var newlyCreatedColor: ColorInfo?
     
     var body: some View {
         NavigationStack {
@@ -26,12 +27,38 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        colorDataBase.append(.eggPlant)
+                        newlyCreatedColor = .init(title: "Some color", red: 0.5, green: 0.5, blue: 0.5)
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
+        }.sheet(item: $newlyCreatedColor) { color in
+            newColorSheet(for: color)
+        }
+    }
+    
+    private func newColorSheet(for color: ColorInfo) -> some View {
+        NavigationStack {
+            ColorInfoView(color)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            newlyCreatedColor = nil
+                        } label: {
+                            Text("Cancel")
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            colorDataBase.append(color)
+                            newlyCreatedColor = nil
+                        } label: {
+                            Text("Add").bold()
+                        }
+                    }
+                }
         }
     }
 }
