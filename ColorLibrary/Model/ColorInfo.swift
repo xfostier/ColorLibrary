@@ -16,12 +16,24 @@ struct ColorInfo: Identifiable, Hashable {
     var green: CGFloat
     var blue: CGFloat
     
-    init(title: String, red: CGFloat, green: CGFloat, blue: CGFloat) {
+    init(title: String, red: CGFloat, green: CGFloat, blue: CGFloat, id: UUID = UUID()) {
         self.title = title
         self.red = red
         self.green = green
         self.blue = blue
-        self.id = UUID()
+        self.id = id
+    }
+    
+    func red(_ value: CGFloat) -> ColorInfo {
+        .init(title: title, red: value, green: green, blue: blue)
+    }
+    
+    func green(_ value: CGFloat) -> ColorInfo {
+        .init(title: title, red: red, green: value, blue: blue)
+    }
+    
+    func blue(_ value: CGFloat) -> ColorInfo {
+        .init(title: title, red: red, green: green, blue: value)
     }
 }
 

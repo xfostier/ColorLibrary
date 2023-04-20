@@ -32,9 +32,15 @@ struct ColorInfoView: View {
             Spacer()
             
             VStack {
-                ColorSlider(value: $info.red, leading: .black, trailing: .white)
-                ColorSlider(value: $info.green, leading: .black, trailing: .white)
-                ColorSlider(value: $info.blue, leading: .black, trailing: .white)
+                ColorSlider(value: $info.red,
+                            leading: info.red(0).uiColor,
+                            trailing: info.red(1).uiColor)
+                ColorSlider(value: $info.green,
+                            leading: info.green(0).uiColor,
+                            trailing: info.green(1).uiColor)
+                ColorSlider(value: $info.blue,
+                            leading: info.blue(0).uiColor,
+                            trailing: info.blue(1).uiColor)
             }.padding(.horizontal, 16)
             
             Spacer()
