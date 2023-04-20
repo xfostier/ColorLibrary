@@ -42,8 +42,8 @@ struct ColorInfoView: View {
     }
     
     private var slidersView: some View {
-        VStack {
-            HStack {
+        Grid(alignment: .trailing) {
+            GridRow {
                 Text("Red").bold()
                 ColorSlider(value: $info.red,
                             leading: info.red(0).uiColor,
@@ -52,7 +52,7 @@ struct ColorInfoView: View {
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
             }
-            HStack {
+            GridRow {
                 Text("Green").bold()
                 ColorSlider(value: $info.green,
                             leading: info.green(0).uiColor,
@@ -61,7 +61,7 @@ struct ColorInfoView: View {
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
             }
-            HStack {
+            GridRow {
                 Text("Blue").bold()
                 ColorSlider(value: $info.blue,
                             leading: info.blue(0).uiColor,
