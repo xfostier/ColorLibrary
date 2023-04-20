@@ -26,6 +26,11 @@ struct ColorSlider: View {
     
     var body: some View {
         ZStack {
+            let dragGesture = DragGesture(minimumDistance: 2)
+                .onChanged { dragValue in
+                    value = dragValue.translation.width
+                }
+            
             Capsule(style: .continuous)
                 .foregroundStyle(
                     LinearGradient(colors: [leadingColor, trailingColor],
@@ -36,6 +41,7 @@ struct ColorSlider: View {
             Circle().fill(.white)
                 .padding(4)
                 .shadow(color: .black.opacity(0.3), radius: 4)
+                .gesture(dragGesture)
         }
         .frame(height: height)
     }
