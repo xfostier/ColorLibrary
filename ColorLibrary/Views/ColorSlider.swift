@@ -25,7 +25,7 @@ struct ColorSlider: View {
     private let height: CGFloat = 50
     
     var body: some View {
-        ZStack {
+        GeometryReader { proxy in
             let dragGesture = DragGesture(minimumDistance: 2)
                 .onChanged { dragValue in
                     value = dragValue.translation.width
@@ -41,9 +41,14 @@ struct ColorSlider: View {
             Circle().fill(.white)
                 .padding(4)
                 .shadow(color: .black.opacity(0.3), radius: 4)
+                .offset(x: xCoordinates(forContentSize: proxy.size, value: value))
                 .gesture(dragGesture)
         }
         .frame(height: height)
+    }
+    
+    private func xCoordinates(forContentSize size: CGSize, value: CGFloat) -> CGFloat {
+        value * (size.width - size.height)
     }
 }
 
