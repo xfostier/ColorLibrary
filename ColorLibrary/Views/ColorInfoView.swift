@@ -16,6 +16,9 @@ struct ColorInfoView: View {
         self.closeColors = closeColors
     }
     
+    @ScaledMetric private var closeColorsViewHeight = 85
+    @ScaledMetric private var closeColorsItemWidth = 60
+    
     var body: some View {
         VStack {
             VStack(spacing: 16) {
@@ -33,24 +36,28 @@ struct ColorInfoView: View {
     }
     
     private var closeColorsView: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("Close colors")
                 .font(.title3).bold()
+                .padding(.horizontal, 16)
             
-            HStack {
-                ForEach(closeColors) { color in
-                    NavigationLink {
-                        ColorInfoView(color, closeColors: [.red, .salmon])
-                    } label: {
-                        VStack {
-                            ColorCircle(color, scale: 2)
-                            Text(color.title)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    ForEach(closeColors) { color in
+                        NavigationLink {
+                            ColorInfoView(color, closeColors: [.red, .salmon])
+                        } label: {
+                            VStack {
+                                ColorCircle(color, scale: 2)
+                                Text(color.title)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .frame(width: closeColorsItemWidth)
                         }
                     }
-                }
-            }
+                }.padding(.horizontal, 16)
+            }.frame(height: closeColorsViewHeight)
         }
     }
 }
