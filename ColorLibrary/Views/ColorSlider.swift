@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ColorSlider: View {
     @Binding var value: CGFloat
+    @State private var previousValue: CGFloat
     
     let leadingColor: Color
     let trailingColor: Color
@@ -17,6 +18,7 @@ struct ColorSlider: View {
          leading: Color,
          trailing: Color) {
         _value = value
+        previousValue = value.wrappedValue
         
         self.leadingColor = leading
         self.trailingColor = trailing
@@ -28,7 +30,13 @@ struct ColorSlider: View {
         GeometryReader { proxy in
             let dragGesture = DragGesture(minimumDistance: 2)
                 .onChanged { dragValue in
-                    value = dragValue.translation.width
+                    value = clamp(
+                        value: previousValue + value(forContentSize: proxy.size,
+                                                     xCoordinates: dragValue.translation.width)
+                    )
+                }
+                .onEnded { _ in
+                    previousValue = value
                 }
             
             Capsule(style: .continuous)
@@ -41,7 +49,7 @@ struct ColorSlider: View {
             Circle().fill(.white)
                 .padding(4)
                 .shadow(color: .black.opacity(0.3), radius: 4)
-                .offset(x: xCoordinates(forContentSize: proxy.size, value: value))
+                .offset(x: xCoordinates(forContentSize: proxy.size, value: clamp(value: value)))
                 .gesture(dragGesture)
         }
         .frame(height: height)
@@ -49,6 +57,14 @@ struct ColorSlider: View {
     
     private func xCoordinates(forContentSize size: CGSize, value: CGFloat) -> CGFloat {
         value * (size.width - size.height)
+    }
+    
+    private func value(forContentSize size: CGSize, xCoordinates: CGFloat) -> CGFloat {
+        xCoordinates / (size.width - size.height)
+    }
+    
+    private func clamp(value: CGFloat) -> CGFloat {
+        max(min(value, 1), 0)
     }
 }
 
