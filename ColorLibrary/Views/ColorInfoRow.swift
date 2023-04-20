@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ColorInfoRow: View {
-    let info: ColorInfo
+    @ObservedObject private(set) var info: ColorInfo
     
     init(_ info: ColorInfo) {
         self.info = info

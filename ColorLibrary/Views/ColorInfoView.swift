@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ColorInfoView: View {
-    @State private(set) var info: ColorInfo
+    @ObservedObject private(set) var info: ColorInfo
     let closeColors: [ColorInfo]
     
     init(_ info: ColorInfo, closeColors: [ColorInfo] = []) {
-        self._info = State(initialValue: info)
+        self.info = info
         self.closeColors = closeColors
     }
     

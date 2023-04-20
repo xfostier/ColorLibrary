@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ColorCircle: View {
-    let info: ColorInfo
+    @ObservedObject private(set) var info: ColorInfo
     let scale: CGFloat
     
     init(_ info: ColorInfo, scale: CGFloat = 1) {

@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ColorInfo: Identifiable, Hashable {
-    var title: String
+final class ColorInfo: Identifiable, Hashable, ObservableObject {
+    @Published var title: String
     
     let id: UUID
     
-    var red: CGFloat
-    var green: CGFloat
-    var blue: CGFloat
+    @Published var red: CGFloat
+    @Published var green: CGFloat
+    @Published var blue: CGFloat
     
     init(title: String, red: CGFloat, green: CGFloat, blue: CGFloat, id: UUID = UUID()) {
         self.title = title
@@ -22,6 +22,22 @@ struct ColorInfo: Identifiable, Hashable {
         self.green = green
         self.blue = blue
         self.id = id
+    }
+    
+    static func == (lhs: ColorInfo, rhs: ColorInfo) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.title == rhs.title &&
+        lhs.red == rhs.red &&
+        lhs.green == rhs.green &&
+        lhs.blue == rhs.blue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(id)
+        hasher.combine(red)
+        hasher.combine(green)
+        hasher.combine(blue)
     }
     
     func red(_ value: CGFloat) -> ColorInfo {
