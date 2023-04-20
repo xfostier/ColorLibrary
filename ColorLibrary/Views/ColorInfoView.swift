@@ -44,9 +44,7 @@ struct ColorInfoView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack {
                     ForEach(closeColors) { color in
-                        NavigationLink {
-                            ColorInfoView(color, closeColors: [.red, .salmon])
-                        } label: {
+                        NavigationLink(value: color) {
                             VStack {
                                 ColorCircle(color, scale: 2)
                                 Text(color.title)

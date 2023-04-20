@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ColorInfo: Identifiable {
+struct ColorInfo: Identifiable, Hashable {
     let title: String
     
     let id: UUID

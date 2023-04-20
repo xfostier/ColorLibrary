@@ -14,14 +14,15 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(colors) { color in
-                    NavigationLink {
-                        ColorInfoView(color, closeColors: [.eggPlant, .orchid])
-                    } label: {
+                    NavigationLink(value: color) {
                         ColorInfoRow(color)
                     }
                 }
             }
             .navigationTitle("Colors")
+            .navigationDestination(for: ColorInfo.self) { color in
+                ColorInfoView(color, closeColors: [.eggPlant, .orchid])
+            }
         }
     }
 }
