@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    let colors: [ColorInfo] = [.blue, .cantaloupe, .carnation, .eggPlant, .green, .lemon, .orchid, .red, .salmon, .seaFoam]
+    @ObservedObject private(set) var colorDataBase = ColorDataBase.demo
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(colors) { color in
+                ForEach(colorDataBase.colors) { color in
                     NavigationLink(value: color) {
                         ColorInfoRow(color)
                     }
@@ -22,6 +22,15 @@ struct ContentView: View {
             .navigationTitle("Colors")
             .navigationDestination(for: ColorInfo.self) { color in
                 ColorInfoView(color, closeColors: [.eggPlant, .orchid])
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        colorDataBase.append(.eggPlant)
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
             }
         }
     }
