@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ColorCircle: View {
     let info: ColorInfo
+    let scale: CGFloat
     
-    init(_ info: ColorInfo) {
+    init(_ info: ColorInfo, scale: CGFloat = 1) {
         self.info = info
+        self.scale = scale
     }
     
     @ScaledMetric private var scaledSize: CGFloat = 30
-    private var size: CGFloat { scaledSize }
+    private var size: CGFloat { scaledSize * scale }
     private let lineWidth: CGFloat = 3
     
     var body: some View {
