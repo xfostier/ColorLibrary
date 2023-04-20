@@ -31,17 +31,7 @@ struct ColorInfoView: View {
             
             Spacer()
             
-            VStack {
-                ColorSlider(value: $info.red,
-                            leading: info.red(0).uiColor,
-                            trailing: info.red(1).uiColor)
-                ColorSlider(value: $info.green,
-                            leading: info.green(0).uiColor,
-                            trailing: info.green(1).uiColor)
-                ColorSlider(value: $info.blue,
-                            leading: info.blue(0).uiColor,
-                            trailing: info.blue(1).uiColor)
-            }.padding(.horizontal, 16)
+            slidersView
             
             Spacer()
             
@@ -49,6 +39,38 @@ struct ColorInfoView: View {
                 closeColorsView
             }
         }
+    }
+    
+    private var slidersView: some View {
+        VStack {
+            HStack {
+                Text("Red").bold()
+                ColorSlider(value: $info.red,
+                            leading: info.red(0).uiColor,
+                            trailing: info.red(1).uiColor)
+                Text(String(format: "%0.2f", info.red))
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+            }
+            HStack {
+                Text("Green").bold()
+                ColorSlider(value: $info.green,
+                            leading: info.green(0).uiColor,
+                            trailing: info.green(1).uiColor)
+                Text(String(format: "%0.2f", info.green))
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+            }
+            HStack {
+                Text("Blue").bold()
+                ColorSlider(value: $info.blue,
+                            leading: info.blue(0).uiColor,
+                            trailing: info.blue(1).uiColor)
+                Text(String(format: "%0.2f", info.blue))
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+            }
+        }.padding(.horizontal, 16)
     }
     
     private var closeColorsView: some View {
