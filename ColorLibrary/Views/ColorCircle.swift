@@ -14,7 +14,8 @@ struct ColorCircle: View {
         self.info = info
     }
     
-    private let size: CGFloat = 30
+    @ScaledMetric private var scaledSize: CGFloat = 30
+    private var size: CGFloat { scaledSize }
     private let lineWidth: CGFloat = 3
     
     var body: some View {
