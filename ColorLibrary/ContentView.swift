@@ -11,10 +11,17 @@ struct ContentView: View {
     let colors: [ColorInfo] = [.blue, .cantaloupe, .carnation, .eggPlant, .green, .lemon, .orchid, .red, .salmon, .seaFoam]
     
     var body: some View {
-        List {
-            ForEach(colors) { color in
-                ColorInfoRow(color)
+        NavigationStack {
+            List {
+                ForEach(colors) { color in
+                    NavigationLink {
+                        Text(color.title)
+                    } label: {
+                        ColorInfoRow(color)
+                    }
+                }
             }
+            .navigationTitle("Colors")
         }
     }
 }
