@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            ForEach(colors, id: \.title) { color in
+            ForEach(colors) { color in
                 ColorInfoRow(color)
             }
         }

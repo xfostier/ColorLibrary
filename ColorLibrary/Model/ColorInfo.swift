@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct ColorInfo {
+struct ColorInfo: Identifiable {
     let title: String
+    
+    let id: UUID
     
     var red: CGFloat
     var green: CGFloat
@@ -19,6 +21,7 @@ struct ColorInfo {
         self.red = red
         self.green = green
         self.blue = blue
+        self.id = UUID()
     }
 }
 
