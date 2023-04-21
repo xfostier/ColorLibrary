@@ -26,7 +26,13 @@ private final class CloseColorsLoader: ObservableObject {
         }
         
         timer = .scheduledTimer(withTimeInterval: time, repeats: false) { [weak self] _ in
-            self?.colors = dataBase.closeColors(to: color, distance: distance)
+            DispatchQueue.global(qos: .background).async {
+                let colors = dataBase.closeColors(to: color, distance: distance)
+                
+                DispatchQueue.main.async {
+                    self?.colors = colors
+                }
+            }
         }
     }
 }
