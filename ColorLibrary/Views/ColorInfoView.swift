@@ -131,10 +131,12 @@ struct ColorInfoView: View {
                                     .foregroundColor(.secondary)
                             }
                             .frame(width: closeColorsItemWidth)
-                        }
+                        }.transition(.opacity.combined(with: .scale))
                     }
                 }.padding(.horizontal, 16)
-            }.frame(height: closeColorsViewHeight)
+            }
+            .frame(height: closeColorsViewHeight)
+            .animation(.default, value: closeColors)
         }
     }
 }
