@@ -7,9 +7,34 @@
 
 import SwiftUI
 
+private final class CloseColorsLoader: ObservableObject {
+    @Published private(set) var colors = [ColorInfo]()
+    
+    private var timer: Timer?
+    
+    init() {}
+    
+    func loadCloseColors(to color: ColorInfo,
+                         dataBase: ColorDataBase,
+                         distance: CGFloat = 0.8,
+                         loadAfter time: TimeInterval = 0) {
+        timer?.invalidate()
+        
+        guard time > 0 else {
+            colors = dataBase.closeColors(to: color, distance: distance)
+            return
+        }
+        
+        timer = .scheduledTimer(withTimeInterval: time, repeats: false) { [weak self] _ in
+            self?.colors = dataBase.closeColors(to: color, distance: distance)
+        }
+    }
+}
+
 struct ColorInfoView: View {
     @EnvironmentObject private var colorDataBase: ColorDataBase
     @ObservedObject private(set) var info: ColorInfo
+    @StateObject private var closeColorsLoader = CloseColorsLoader()
     let showsCloseColors: Bool
     
     init(_ info: ColorInfo, showsCloseColors: Bool = true) {
@@ -37,11 +62,17 @@ struct ColorInfoView: View {
             Spacer()
             
             if showsCloseColors {
-                let closeColors = colorDataBase.closeColors(to: info, distance: 0.8)
-                if !closeColors.isEmpty {
-                    closeColorsView(closeColors)
+                if !closeColorsLoader.colors.isEmpty {
+                    closeColorsView(closeColorsLoader.colors)
                 }
             }
+        }.onReceive(info.objectWillChange) {
+            closeColorsLoader.loadCloseColors(to: info,
+                                              dataBase: colorDataBase,
+                                              loadAfter: 0.2)
+        }.onAppear {
+            closeColorsLoader.loadCloseColors(to: info,
+                                              dataBase: colorDataBase)
         }
     }
     
