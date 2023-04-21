@@ -41,6 +41,7 @@ struct ColorInfoView: View {
     @EnvironmentObject private var colorDataBase: ColorDataBase
     @ObservedObject private(set) var info: ColorInfo
     @StateObject private var closeColorsLoader = CloseColorsLoader()
+    @State private var isColorMainFocus = false
     let showsCloseColors: Bool
     
     init(_ info: ColorInfo, showsCloseColors: Bool = true) {
@@ -54,7 +55,13 @@ struct ColorInfoView: View {
     var body: some View {
         VStack {
             VStack(spacing: 16) {
-                ColorCircle(info, scale: 3)
+                Button {
+                    withAnimation(.spring()) {
+                        isColorMainFocus.toggle()
+                    }
+                } label: {
+                    ColorCircle(info, scale: isColorMainFocus ? 8 : 3)
+                }
                 
                 TextField("Title", text: $info.title)
                     .textFieldStyle(.roundedBorder)
@@ -67,7 +74,7 @@ struct ColorInfoView: View {
             
             Spacer()
             
-            if showsCloseColors {
+            if showsCloseColors && !isColorMainFocus {
                 if !closeColorsLoader.colors.isEmpty {
                     closeColorsView(closeColorsLoader.colors)
                 }
