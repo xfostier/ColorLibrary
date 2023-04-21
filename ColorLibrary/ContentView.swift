@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private(set) var colorDataBase = ColorDataBase.demo
+    @EnvironmentObject private var colorDataBase: ColorDataBase
     @State private var newlyCreatedColor: ColorInfo?
     
     var body: some View {
@@ -22,7 +22,7 @@ struct ContentView: View {
             }
             .navigationTitle("Colors")
             .navigationDestination(for: ColorInfo.self) { color in
-                ColorInfoView(color, closeColors: [.eggPlant, .orchid])
+                ColorInfoView(color)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -40,7 +40,7 @@ struct ContentView: View {
     
     private func newColorSheet(for color: ColorInfo) -> some View {
         NavigationStack {
-            ColorInfoView(color)
+            ColorInfoView(color, showsCloseColors: false)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -65,6 +65,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(ColorDataBase.demo)
     }
 }

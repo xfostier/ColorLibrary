@@ -40,6 +40,13 @@ final class ColorInfo: Identifiable, Hashable, ObservableObject {
         hasher.combine(blue)
     }
     
+    func distance(to other: ColorInfo) -> CGFloat {
+        let red = self.red - other.red
+        let green = self.green - other.green
+        let blue = self.blue - other.blue
+        return (red*red + green*green + blue*blue).squareRoot()
+    }
+    
     func red(_ value: CGFloat) -> ColorInfo {
         .init(title: title, red: value, green: green, blue: blue)
     }

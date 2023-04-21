@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ColorInfoView: View {
+    @EnvironmentObject private var colorDataBase: ColorDataBase
     @ObservedObject private(set) var info: ColorInfo
-    let closeColors: [ColorInfo]
+    let showsCloseColors: Bool
     
-    init(_ info: ColorInfo, closeColors: [ColorInfo] = []) {
+    init(_ info: ColorInfo, showsCloseColors: Bool = true) {
         self.info = info
-        self.closeColors = closeColors
+        self.showsCloseColors = showsCloseColors
     }
     
     @ScaledMetric private var closeColorsViewHeight = 85
@@ -35,8 +36,11 @@ struct ColorInfoView: View {
             
             Spacer()
             
-            if !closeColors.isEmpty {
-                closeColorsView
+            if showsCloseColors {
+                let closeColors = colorDataBase.closeColors(to: info, distance: 0.8)
+                if !closeColors.isEmpty {
+                    closeColorsView(closeColors)
+                }
             }
         }
     }
@@ -73,7 +77,7 @@ struct ColorInfoView: View {
         }.padding(.horizontal, 16)
     }
     
-    private var closeColorsView: some View {
+    private func closeColorsView(_ closeColors: [ColorInfo]) -> some View {
         VStack(alignment: .leading) {
             Text("Close colors")
                 .font(.title3).bold()
@@ -100,6 +104,7 @@ struct ColorInfoView: View {
 
 struct ColorInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        ColorInfoView(.cantaloupe, closeColors: [.blue, .lemon])
+        ColorInfoView(.cantaloupe, showsCloseColors: true)
+            .environmentObject(ColorDataBase.demo)
     }
 }

@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct ColorLibraryApp: App {
+    private let colorDataBase = ColorDataBase.demo
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(colorDataBase)
         }
     }
 }

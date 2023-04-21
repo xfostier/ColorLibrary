@@ -18,6 +18,14 @@ final class ColorDataBase: ObservableObject {
         colors.append(color)
     }
     
+    func closeColors(to color: ColorInfo, distance maxDistance: CGFloat) -> [ColorInfo] {
+        colors
+            .map { ($0, $0.distance(to: color)) }
+            .filter { (_, distance) in distance > 0.00001 && distance <= maxDistance }
+            .sorted { lhs, rhs in lhs.1 < rhs.1 }
+            .map { (color, _) in color }
+    }
+    
     static var demo: ColorDataBase {
         .init(colors: [.blue, .cantaloupe, .carnation, .eggPlant, .green, .lemon, .orchid, .red, .salmon, .seaFoam])
     }
