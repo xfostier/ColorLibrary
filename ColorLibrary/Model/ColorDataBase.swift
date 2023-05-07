@@ -18,11 +18,14 @@ final class ColorDataBase: ObservableObject {
         colors.append(color)
     }
     
-    func closeColors(to color: ColorInfo, distance maxDistance: CGFloat) -> [ColorInfo] {
-        colors
+    func closeColors(to color: ColorInfo, distance maxDistance: CGFloat) throws -> [ColorInfo] {
+        try colors
             .map { ($0, $0.distance(to: color)) }
             .filter { (_, distance) in distance > 0.00001 && distance <= maxDistance }
-            .sorted { lhs, rhs in lhs.1 < rhs.1 }
+            .sorted { lhs, rhs in
+                try Task.checkCancellation()
+                return lhs.1 < rhs.1
+            }
             .map { (color, _) in color }
     }
     

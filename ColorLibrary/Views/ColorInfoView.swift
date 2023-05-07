@@ -7,32 +7,32 @@
 
 import SwiftUI
 
-private final class CloseColorsLoader: ObservableObject {
+@MainActor private final class CloseColorsLoader: ObservableObject {
     @Published private(set) var colors = [ColorInfo]()
     
-    private var timer: Timer?
+    private var loadingTask: Task<Void, Error>?
     
     init() {}
+    
+    deinit { loadingTask?.cancel() }
     
     func loadCloseColors(to color: ColorInfo,
                          dataBase: ColorDataBase,
                          distance: CGFloat = 0.8,
                          loadAfter time: TimeInterval = 0) {
-        timer?.invalidate()
+        loadingTask?.cancel()
         
         guard time > 0 else {
-            colors = dataBase.closeColors(to: color, distance: distance)
+            if let colors = try? dataBase.closeColors(to: color, distance: distance) {
+                self.colors = colors
+            }
             return
         }
         
-        timer = .scheduledTimer(withTimeInterval: time, repeats: false) { [weak self] _ in
-            DispatchQueue.global(qos: .background).async {
-                let colors = dataBase.closeColors(to: color, distance: distance)
-                
-                DispatchQueue.main.async {
-                    self?.colors = colors
-                }
-            }
+        loadingTask = Task { [weak self] in
+            try await Task.sleep(for: .seconds(time))
+            
+            try self?.colors = dataBase.closeColors(to: color, distance: distance)
         }
     }
 }
