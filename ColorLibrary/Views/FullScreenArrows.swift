@@ -10,7 +10,12 @@ import SwiftUI
 struct FullScreenArrows: Shape {
     let arrowLength: CGFloat // Between 0 and 1
     let tipSize: CGFloat // Between 0 and 1
-    let arrowPosition: CGFloat // Between 0 and 1
+    private var arrowPosition: CGFloat // Between 0 and 1
+    
+    var animatableData: CGFloat {
+        get { arrowPosition }
+        set { arrowPosition = newValue }
+    }
     
     init(isFullScreen: Bool, arrowLength: CGFloat = 0.8, tipSize: CGFloat = 0.6) {
         self.arrowLength = arrowLength
