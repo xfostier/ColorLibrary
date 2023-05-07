@@ -16,6 +16,7 @@
 		761DCD3329F173B7003B8704 /* ColorInfo+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761DCD3229F173B7003B8704 /* ColorInfo+SwiftUI.swift */; };
 		761DCD3529F1753B003B8704 /* ColorInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761DCD3429F1753B003B8704 /* ColorInfoRow.swift */; };
 		761DCD3729F17EE2003B8704 /* ColorInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761DCD3629F17EE2003B8704 /* ColorInfoView.swift */; };
+		7625E57F2A08521200C6E861 /* FullScreenArrows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625E57E2A08521200C6E861 /* FullScreenArrows.swift */; };
 		76BD74F129F1B56500498353 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BD74F029F1B56500498353 /* ColorSlider.swift */; };
 		76EEA76B29F1E6EB00F2E817 /* ColorDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EEA76A29F1E6EB00F2E817 /* ColorDataBase.swift */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,7 @@
 		761DCD3229F173B7003B8704 /* ColorInfo+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorInfo+SwiftUI.swift"; sourceTree = "<group>"; };
 		761DCD3429F1753B003B8704 /* ColorInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInfoRow.swift; sourceTree = "<group>"; };
 		761DCD3629F17EE2003B8704 /* ColorInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorInfoView.swift; sourceTree = "<group>"; };
+		7625E57E2A08521200C6E861 /* FullScreenArrows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenArrows.swift; sourceTree = "<group>"; };
 		76BD74F029F1B56500498353 /* ColorSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSlider.swift; sourceTree = "<group>"; };
 		76EEA76A29F1E6EB00F2E817 /* ColorDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorDataBase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				761DCD3429F1753B003B8704 /* ColorInfoRow.swift */,
 				761DCD3629F17EE2003B8704 /* ColorInfoView.swift */,
 				76BD74F029F1B56500498353 /* ColorSlider.swift */,
+				7625E57E2A08521200C6E861 /* FullScreenArrows.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			files = (
 				76EEA76B29F1E6EB00F2E817 /* ColorDataBase.swift in Sources */,
 				761DCD3529F1753B003B8704 /* ColorInfoRow.swift in Sources */,
+				7625E57F2A08521200C6E861 /* FullScreenArrows.swift in Sources */,
 				761DCD3729F17EE2003B8704 /* ColorInfoView.swift in Sources */,
 				761DCD2E29F17084003B8704 /* ColorInfo.swift in Sources */,
 				761DCD3129F17344003B8704 /* ColorCircle.swift in Sources */,

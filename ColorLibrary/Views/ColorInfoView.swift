@@ -55,13 +55,7 @@ struct ColorInfoView: View {
     var body: some View {
         VStack {
             VStack(spacing: 16) {
-                Button {
-                    withAnimation(.spring()) {
-                        isColorMainFocus.toggle()
-                    }
-                } label: {
-                    ColorCircle(info, scale: isColorMainFocus ? 8 : 3)
-                }
+                ColorCircle(info, scale: isColorMainFocus ? 8 : 3)
                 
                 TextField("Title", text: $info.title)
                     .textFieldStyle(.roundedBorder)
@@ -86,6 +80,18 @@ struct ColorInfoView: View {
         }.onAppear {
             closeColorsLoader.loadCloseColors(to: info,
                                               dataBase: colorDataBase)
+        }.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    withAnimation(.spring()) {
+                        isColorMainFocus.toggle()
+                    }
+                } label: {
+                    FullScreenArrows(isFullScreen: !isColorMainFocus)
+                        .stroke(style: .init(lineWidth: 2, lineCap: .round))
+                        .frame(width: 20, height: 20)
+                }
+            }
         }
     }
     
