@@ -16,23 +16,23 @@ import SwiftUI
     
     deinit { loadingTask?.cancel() }
     
+    private func setColors(_ colors: [ColorInfo]) {
+        self.colors = colors
+    }
+    
     func loadCloseColors(to color: ColorInfo,
                          dataBase: ColorDataBase,
                          distance: CGFloat = 0.8,
                          loadAfter time: TimeInterval = 0) {
         loadingTask?.cancel()
         
-        guard time > 0 else {
-            if let colors = try? dataBase.closeColors(to: color, distance: distance) {
-                self.colors = colors
-            }
-            return
-        }
-        
-        loadingTask = Task { [weak self] in
+        // Nous sommes dans le MainActor, donc on détache une tache du MainActor
+        // et cette tache permet de calculer les couleurs proches.
+        loadingTask = Task.detached(priority: .background) { [weak self] in
             try await Task.sleep(for: .seconds(time))
             
-            try self?.colors = dataBase.closeColors(to: color, distance: distance)
+            let colors = try dataBase.closeColors(to: color, distance: distance)
+            await self?.setColors(colors)
         }
     }
 }
