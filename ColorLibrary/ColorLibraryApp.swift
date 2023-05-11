@@ -13,8 +13,8 @@ struct ColorLibraryApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(colorDataBase)
+            ScreenView(SettingsScreen())
+            ScreenView(LoginScreen())
         }
     }
 }
