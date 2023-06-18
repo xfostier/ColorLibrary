@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(colorDataBase.colors) { color in
+                ForEach(colorDataBase.displayedColors) { color in
                     NavigationLink(value: color) {
                         ColorInfoRow(color)
                     }
@@ -30,7 +30,8 @@ struct ContentView: View {
                                 },
                                 label: {
                                     Image(systemName: "trash")
-                                })
+                                }
+                            )
                         }
                     )
                 }
@@ -40,12 +41,16 @@ struct ContentView: View {
             .navigationDestination(for: ColorInfo.self) { color in
                 ColorInfoView(color)
             }
-            .searchable(text: $searchText,
-                        placement: .navigationBarDrawer(displayMode: .always))
-                .onChange(of: searchText,
-                          perform: { _ in
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer(displayMode: .always)
+            )
+            .onChange(
+                of: searchText,
+                perform: { _ in
                     colorDataBase.filter(searchText: searchText)
-            })
+                }
+            )
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

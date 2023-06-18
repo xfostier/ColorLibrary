@@ -8,36 +8,36 @@
 import Foundation
 
 final class ColorDataBase: ObservableObject {
-    final let userDefaultKey = "CustomColors"
-    @Published private(set) var colors: [ColorInfo]
-    private var colorCache: [ColorInfo]
+    @Published private(set) var displayedColors: [ColorInfo]
+    private var colors: [ColorInfo]
+    
     
     init(colors: [ColorInfo]) {
         self.colors = colors
-        self.colorCache = colors
+        self.displayedColors = colors
         // Will erase default colors if some exist on disk
         readFromJSON()
     }
     
     func append(_ color: ColorInfo) {
         colors.append(color)
-        colorCache = colors
+        displayedColors.append(color)
         saveToJSON()
     }
     
     func delete(_ color: ColorInfo) {
+        displayedColors.removeAll(where: { color == $0})
         colors.removeAll(where: { color == $0 })
-        colorCache = colors
         saveToJSON()
     }
     
     func filter(searchText: String) {
         guard !searchText.isEmpty else {
-            colors = colorCache
+            displayedColors = colors
             return
         }
-        colors = colorCache
-        colors = colors.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        displayedColors = colors
+        displayedColors = colors.filter { $0.title.lowercased().contains(searchText.lowercased()) }
     }
     
     func closeColors(to color: ColorInfo, distance maxDistance: CGFloat) throws -> [ColorInfo] {
@@ -58,7 +58,10 @@ final class ColorDataBase: ObservableObject {
     func saveToJSON() {
         do {
             let file = try FileManager.default
-                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                .url(
+                    for: .documentDirectory,
+                    in: .userDomainMask,
+                    appropriateFor: nil, create: true)
                 .appendingPathComponent("color_library.json")
             
             try JSONEncoder()
@@ -72,12 +75,20 @@ final class ColorDataBase: ObservableObject {
     func readFromJSON() {
         do {
             let file = try FileManager.default
-                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .url(
+                    for: .documentDirectory,
+                    in: .userDomainMask,
+                    appropriateFor: nil, create: false
+                )
                 .appendingPathComponent("color_library.json")
             
             let datas = try Data(contentsOf: file)
-            colors = try JSONDecoder().decode([ColorInfo].self, from: datas)
-            colorCache = colors
+            let unwrappedColors = try JSONDecoder().decode([ColorInfo].self, from: datas)
+            guard !unwrappedColors.isEmpty else {
+                return
+            }
+            colors = unwrappedColors
+            displayedColors = colors
         } catch {
             print("Failure when reading datas")
         }
