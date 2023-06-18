@@ -25,7 +25,7 @@ final class ColorInfo: Identifiable, Hashable, Codable, ObservableObject {
     }
     
     static func == (lhs: ColorInfo, rhs: ColorInfo) -> Bool {
-        lhs.id == rhs.id &&
+        // lhs.id == rhs.id &&
         lhs.title == rhs.title &&
         lhs.red == rhs.red &&
         lhs.green == rhs.green &&

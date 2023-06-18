@@ -35,7 +35,20 @@ final class ColorDataBase: ObservableObject {
             
             defaults.set(datas, forKey: userDefaultKey)
         } catch {
-            print("Nothing happen")
+            print("Nothing happened")
+        }
+    }
+    
+    func delete(_ color: ColorInfo) {
+        colors.removeAll(where: { color == $0 })
+        colorCache = colors
+        do {
+            let datas = try JSONEncoder().encode(colors)
+            let defaults = UserDefaults.standard
+            
+            defaults.set(datas, forKey: userDefaultKey)
+        } catch {
+            print("Nothing happened")
         }
     }
     

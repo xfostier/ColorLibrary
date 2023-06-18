@@ -19,6 +19,20 @@ struct ContentView: View {
                     NavigationLink(value: color) {
                         ColorInfoRow(color)
                     }
+                    .swipeActions(
+                        edge: .leading,
+                        allowsFullSwipe: false,
+                        content: {
+                            Button(
+                                role: .destructive,
+                                action: {
+                                    colorDataBase.delete(color)
+                                },
+                                label: {
+                                    Image(systemName: "trash")
+                                })
+                        }
+                    )
                 }
             }
             .navigationTitle("Colors")
