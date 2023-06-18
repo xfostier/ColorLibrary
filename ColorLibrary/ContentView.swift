@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var colorDataBase: ColorDataBase
     @State private var newlyCreatedColor: ColorInfo?
+    @State var searchText: String = ""
     
     var body: some View {
         NavigationStack {
@@ -21,9 +22,16 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Colors")
+
             .navigationDestination(for: ColorInfo.self) { color in
                 ColorInfoView(color)
             }
+            .searchable(text: $searchText,
+                        placement: .navigationBarDrawer(displayMode: .always))
+                .onChange(of: searchText,
+                          perform: { _ in
+                    colorDataBase.filter(searchText: searchText)
+            })
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

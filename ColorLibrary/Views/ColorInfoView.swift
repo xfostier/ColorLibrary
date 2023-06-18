@@ -61,7 +61,29 @@ struct ColorInfoView: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(maxWidth: 200)
             }
-            
+            if ProcessInfo().isiOSAppOnMac {
+                VStack {
+                    HStack {
+                        Text("SwiftUI:")
+                            .bold()
+                        Button(action: { UIPasteboard.general.string = info.swiftUI }, label: {
+                            Label(info.swiftUI, systemImage: "list.clipboard")
+                        })
+                        .padding(5)
+                        .overlay( RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.accentColor, lineWidth: 1))
+                    }.padding(.vertical, 10)
+                    HStack {
+                        Text("UIKit:").bold()
+                        Button(action: { UIPasteboard.general.string = info.swiftUI }, label: {
+                            Label(info.uiKit, systemImage: "list.clipboard").labelStyle(.titleAndIcon)
+                        })
+                        .padding(5)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.accentColor, lineWidth: 1))
+                    }.padding(.vertical, 10)
+                }.padding(.top, 30)
+            }
             Spacer()
             
             slidersView
@@ -150,7 +172,7 @@ struct ColorInfoView: View {
             }
             .frame(height: closeColorsViewHeight)
             .animation(.default, value: closeColors)
-        }
+        }.padding(.bottom, ProcessInfo().isiOSAppOnMac ? 30 : 0)
     }
 }
 
